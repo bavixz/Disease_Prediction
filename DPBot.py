@@ -38,10 +38,17 @@ input_data = (
 )
 
 # Making the prediction
-prediction = make_prediction(input_data)
+input_data_as_numpy_array = np.asarray(input_data)
 
-# Output the prediction
-if prediction == 0:
-    print('The person is not diabetic')
+input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
+
+std_data = scaler.transform(input_data_reshaped)
+print(std_data)
+
+prediction = lr.predict(std_data)
+print(prediction)
+
+if (prediction[0] == 0):
+    print('The person is not at risk of a heart attack')
 else:
-    print('The person is diabetic')
+    print('The person is at risk of a heart attack')
